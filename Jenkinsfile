@@ -1,14 +1,11 @@
 node {
-    
-	
-
-    env.AWS_ECR_LOGIN=true
     def newApp
-    def registry = 'gustavoapolinario/microservices-node-todo-frontend'
+    def registry = 'https://registry-1.docker.io/v2/'
+	def imagename = "amuyal/todo"
     def registryCredential = 'dockerhub'
-	
+
 	stage('Git') {
-		git 'https://github.com/gustavoapolinario/node-todo-frontend'
+		git 'https://github.com/amuyal/node-todo-frontend.git'
 	}
 	stage('Build') {
 		sh 'npm install'
@@ -17,20 +14,15 @@ node {
 		sh 'npm test'
 	}
 	stage('Building image') {
-        docker.withRegistry( 'https://' + registry, registryCredential ) {
-		    def buildName = registry + ":$BUILD_NUMBER"
+        docker.withRegistry( registry, registryCredential ) {
+		    def buildName = imagename + ":$BUILD_NUMBER"
 			newApp = docker.build buildName
 			newApp.push()
         }
 	}
 	stage('Registring image') {
-        docker.withRegistry( 'https://' + registry, registryCredential ) {
+        docker.withRegistry( registry, registryCredential ) {
     		newApp.push 'latest2'
         }
 	}
-    stage('Removing image') {
-        sh "docker rmi $registry:$BUILD_NUMBER"
-        sh "docker rmi $registry:latest"
-    }
-    
 }

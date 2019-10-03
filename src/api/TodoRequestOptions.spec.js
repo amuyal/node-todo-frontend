@@ -6,22 +6,22 @@ const chai = require('chai')
 describe('TodoRequestOptions', () => {
 	const host = 'http://mockedurl.test/'
 		, todoUrl = 'todo/'
-		, todoRequestOptions = new TodoRequestOptions( host, todoUrl )
+		, todoRequestOptions = new TodoRequestOptions(host, todoUrl)
 
 	// getTodoIdUrl
 	it('getTodoIdUrl() should return empty', () => {
-		expect( todoRequestOptions.getTodoIdUrl() ).to.be.empty;
+		expect(todoRequestOptions.getTodoIdUrl()).to.be.empty;
 	});
 
 	it('getTodoIdUrl({id: Int}) should return Int/', () => {
-		var filter = {id: 1}
-		expect(todoRequestOptions.getTodoIdUrl( filter )).to.equal(filter.id + '/')
+		var filter = { id: 1 }
+		expect(todoRequestOptions.getTodoIdUrl(filter)).to.equal(filter.id + '/')
 
-		filter = {id: 2}
-		expect(todoRequestOptions.getTodoIdUrl( filter )).to.equal(filter.id + '/')
+		filter = { id: 2 }
+		expect(todoRequestOptions.getTodoIdUrl(filter)).to.equal(filter.id + '/')
 
-		filter = {id: 13467839}
-		expect(todoRequestOptions.getTodoIdUrl( filter )).to.equal(filter.id + '/')
+		filter = { id: 13467839 }
+		expect(todoRequestOptions.getTodoIdUrl(filter)).to.equal(filter.id + '/')
 	});
 
 
@@ -31,12 +31,12 @@ describe('TodoRequestOptions', () => {
 	});
 
 	it('getQueryFilters({description: String}) should return description regex query url', () => {
-		var filter = {description: 'find'}
-		expect( todoRequestOptions.getQueryFilters( filter ) ) .to.have.string('find');
+		var filter = { description: 'find' }
+		expect(todoRequestOptions.getQueryFilters(filter)).to.have.string('find');
 
 
-		filter = {description: 'found'}
-		expect( todoRequestOptions.getQueryFilters( filter ) ) .to.have.string('found');
+		filter = { description: 'found' }
+		expect(todoRequestOptions.getQueryFilters(filter)).to.have.string('found');
 
 	});
 
@@ -48,13 +48,13 @@ describe('TodoRequestOptions', () => {
 		expect(todoRequestOptions.getUrl()).to.equal(url)
 	});
 	it('getUrl({id: Int}) should return url with task id', () => {
-		var filter = {id: 1123}
+		var filter = { id: 1123 }
 		var url = host + todoUrl + todoRequestOptions.getTodoIdUrl(filter)
 		expect(todoRequestOptions.getUrl(filter)).to.equal(url)
 	});
 
 	it('getUrl({description: Int}) should return url with queryString filter', () => {
-		var filter = {description: 'searchText'}
+		var filter = { description: 'searchText' }
 		var url = host + todoUrl + todoRequestOptions.getQueryFilters(filter)
 		expect(todoRequestOptions.getUrl(filter)).to.equal(url)
 	});

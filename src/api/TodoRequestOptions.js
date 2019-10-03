@@ -2,9 +2,9 @@
 
 class TodoRequestOptions {
 	constructor(host, todoUrl) {
-		this.host = host ? host : 'http://' + 
- 			(process.env.TODO_BACKEND ? process.env.TODO_BACKEND : 'localhost') + ':' + 
- 			(process.env.TODO_BACKEND_PORT ? process.env.TODO_BACKEND_PORT : '3001') + '/';
+		this.host = host ? host : 'http://' +
+			(process.env.TODO_BACKEND ? process.env.TODO_BACKEND : 'localhost') + ':' +
+			(process.env.TODO_BACKEND_PORT ? process.env.TODO_BACKEND_PORT : '3000') + '/';
 		this.todoUrl = todoUrl ? todoUrl : 'api/Todos/';
 	}
 
@@ -19,7 +19,7 @@ class TodoRequestOptions {
 	}
 	getQueryFilters(filter) {
 		var queryFilters = '';
-		if ( filter ) {
+		if (filter) {
 			queryFilters += filter.description ? '&description__regex=/' + filter.description + '/' : '';
 		}
 
@@ -41,9 +41,9 @@ class TodoRequestOptions {
 	getRequestOption(filter, params) {
 		return {
 			url: this.getUrl(filter)
-			,headers: this.getHeaders()
-			,json: this.jsonFormat()
-			,form: params ? params : null
+			, headers: this.getHeaders()
+			, json: this.jsonFormat()
+			, form: params ? params : null
 		};
 	}
 
